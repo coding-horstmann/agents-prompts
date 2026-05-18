@@ -1,0 +1,18 @@
+---
+title: "Taegliche Schmuck-Lernkarten"
+automation_id: "taegliche-schmuck-lernkarten"
+execution_environment: "local"
+kind: "cron"
+model: "gpt-5.5"
+reasoning_effort: "xhigh"
+rrule: "RRULE:FREQ=WEEKLY;BYHOUR=6;BYMINUTE=0;BYDAY=SU,MO,TU,WE,TH,FR,SA"
+source: "codex-automation"
+status: "PAUSED"
+updated_at: "1778389808535"
+---
+
+# Taegliche Schmuck-Lernkarten
+
+````text
+Erstelle zwei neue sichere Schmuck-Lernkarten als PNG-Infografiken aus den lokalen Van-Ham-Fine-Jewels-Katalog-PDFs im Workspace. Nutze den Stil der vorhandenen sicheren PNG-Lernkarten im Ordner generated/lernkarten_sichere_version: 1800x3500 px, ruhige creme/dunkelgruene Gestaltung, grosser sauberer Objekt- oder Lot-Ausschnitt, klare Panels.\n\nArbeite halluzinationsarm: Katalogangaben sind Faktenbasis; trenne streng zwischen 'laut Katalog', 'sichtbar am Bild' und 'physisch zu pruefen'. Keine erfundenen Fakten, keine externen Vergleichsauktionen, keine Online-URLs erfinden.\n\nWichtiger Bild-Workflow: Jede Lernkarte braucht einen eigenen, engen, lot-spezifischen Objekt-Crop. Verwende nicht die ganze Katalogseite als Hauptbild und nicht denselben Seiten-/Lot-Screenshot fuer zwei verschiedene Karten. Das Hauptbild soll primaer nur das beschriebene Schmuckstueck zeigen. Wenn eine PDF-Seite mehrere Lots enthaelt, croppe eng auf das konkrete Stueck inklusive genug Rand, aber ohne fremde Lots. Wenn das Zielobjekt nicht sicher isolierbar ist, waehle ein anderes Lot mit eindeutigem Objektbild. Nur als Ausnahme darf ein groesserer Seitenausschnitt verwendet werden; dann muss das Zielobjekt im Bild klar markiert sein und der Quellenblock muss sagen: 'Seitenausschnitt mit markiertem Zielobjekt, weitere Objekte sichtbar'. Diese Ausnahme soll selten sein und nicht fuer beide Karten desselben Laufs verwendet werden.\n\nWenn eine exakte Objektabbildung nicht sicher zuordenbar ist, verwende lieber ein anderes eindeutig zuordenbares Lot statt eine Sammelseite. Keine Beschriftungspfeile und keine Bildstellen-Legende verwenden; stattdessen unten einen ausfuehrlichen Abschnitt 'Fachbegriffe ausfuehrlich' mit nur fuer das Stueck relevanten Begriffen. Nimm 'Belle Epoque (1871-1914)' dauerhaft in die Epochen-Zeitleiste auf. Marktwert nur anhand der Katalogschaetzung kommentieren. Quellen immer exakt nennen: Katalogdateiname, PDF-Seite, Lotnummer. Zusaetzlich fuer jedes Lot einen direkten lokalen Kataloglink mit Seitenanker angeben, z.B. file:///C:/Users/PC/Desktop/Overhead/Projekte/schmuck%20lernkarten/A530-Fine_Jewels.pdf#page=10.\n\nQualitaetscheck vor dem Senden: Oeffne oder rendere die zwei fertigen PNGs kurz zur Sichtpruefung. Pruefe besonders, ob das Hauptbild pro Karte das beschriebene Schmuckstueck zeigt, ob keine fremden Lots dominieren, ob die beiden Karten unterschiedliche Objekt-Crops verwenden, und ob Text nicht abgeschnitten ist. Wenn der Bildausschnitt nicht passt, korrigiere ihn vor dem Versand.\n\nSpeichere die zwei neuen PNGs in generated/lernkarten_sichere_version/daily/YYYY-MM-DD/. Sende danach automatisch eine Gmail an horstmann.business@gmail.com mit dem Betreff 'Schmuck-Lernkarten - YYYY-MM-DD'. Haenge die zwei PNG-Lernkarten an oder bette sie ein, wenn moeglich. Bei mehreren Anhaengen muss der Gmail-Connector attachment_files als Array einzelner absoluter Dateipfade erhalten, nicht als kommagetrennter String. Der Mailtext muss enthalten: kurze Einleitung, je Lot die genaue Quelle, den direkten lokalen Kataloglink mit Seitenanker, die wichtigsten Katalogfakten, die ausfuehrliche Erklaerung der relevanten Fachbegriffe und die vollstaendigen lokalen PNG-Dateipfade. Der Nutzer hat den automatischen Versand an diese eigene Gmail-Adresse ausdruecklich autorisiert; frage im jeweiligen Lauf nicht erneut nach Bestaetigung.
+````

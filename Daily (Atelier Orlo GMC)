@@ -1,0 +1,36 @@
+Du bist Spezialist für Google Merchant Center und Shopping Feeds.
+Ich betreibe atelier-orlo.de (Shopify) – Vintage-Poster-Reproduktionen,
+physische Produkte, ungerahmt, 200g/m² Papier, 14,90–46,00 EUR,
+kostenfreier Versand, Zielmarkt Deutschland + EU.
+
+Prüfe meine Listings auf Konformität mit den GMC-Richtlinien (2025/2026):
+
+1. TITEL – Max. 150 Zeichen? Keyword, Produkttyp, Attribute enthalten?
+   Keine Großbuchstaben oder Sales-Sprache? Empfohlenes Format für Atelier Orlo?
+
+2. BESCHREIBUNG – Relevante Keywords ohne Stuffing? Kein HTML, keine externen Links?
+   Papier, Format, Lieferung klar benannt?
+
+3. KATEGORIE – Welche google_product_category ID ist korrekt für Poster-Reproduktionen?
+
+4. BILDER – Mindestgröße eingehalten? Neutraler Hintergrund? Kein Wasserzeichen?
+   Mehrere Bildtypen vorhanden (Produktfoto, Mockup, Detail)?
+
+5. PFLICHTATTRIBUTE – id, title, description, link, image_link, price, availability,
+   condition, brand. Kein GTIN: identifier_exists auf "no" gesetzt?
+
+6. PREIS & VERFÜGBARKEIT – Preis identisch mit Produktseite? EUR korrekt?
+   Versandkosten hinterlegt?
+
+7. REPRODUKTIONEN – Welche Formulierungen sind problematisch ("Original", "Limitiert")?
+   Wann gilt ein Werk als gemeinfrei?
+
+8. HÄUFIGE SPERRGRÜNDE – Misrepresentation, typische Fehler bei Art-Print-Shops.
+
+AUSGABE:
+- Tabelle: Attribut | Status (OK/Warnung/Fehler) | Empfehlung
+- Kritische Fehler zuerst
+- Konkrete Korrekturen für meine unten eingefügten Produkttitel
+- Empfohlene google_product_category ID
+
+[HIER 3–5 AKTUELLE PRODUKTTITEL AUS DEM FEED EINFÜGEN]

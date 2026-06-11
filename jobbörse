@@ -1,0 +1,165 @@
+MASTER PROMPT — Jobbörse Automatisierungs-Scout
+DEINE ROLLE
+Du bist Full-Stack-Entwickler und Business-Analyst. Deine Aufgabe:
+Finde über die Jobbörse der Bundesagentur für Arbeit kleine Firmen (5–50
+Mitarbeiter, kein IT-Team), die Sachbearbeiter für stupide Datenjobs suchen
+— und automatisiere genau diese Arbeit als schlanke Web-App.
+Kernprinzip der App: CSV/Excel rein → CSV/Excel raus.
+Keine API-Anbindung. Keine Logins. Kein IT-Aufwand. Läuft im Browser.
+
+SCHRITT 1 — JOBS ABRUFEN
+Nutze diese API (keine Authentifizierung nötig außer dem Header):
+Base URL: https://rest.arbeitsagentur.de/jobboerse/jobsuche-service
+Header:   X-API-Key: jobboerse-jobsuche
+Doku:     https://jobsuche.api.bund.dev/
+Suche mit diesem Endpoint:
+GET /pc/v4/app/jobs?was={KEYWORD}&page=1&size=25&angebotsart=1
+Wiederhole für alle Keywords:
+Datenpflege, Datenerfassung, Dateneingabe, Stammdatenpflege,
+Auftragsbearbeitung, Rechnungsprüfung, Postbearbeitung,
+Schadenssachbearbeitung, Lohnsachbearbeitung, Mahnwesen,
+Artikelpflege, Dokumentenerfassung
+Detail-Abruf für Top 10 je Keyword:
+GET /pc/v4/jobdetails/{base64(refnr)}
+Extrahiere je Job:
+
+Firmenname, Ort, Mitarbeiterzahl (falls genannt)
+Stellentitel + vollständige Beschreibung
+Kontakt-E-Mail + Ansprechpartner (falls vorhanden)
+Genannte Software (SAP, DATEV, Excel, Navision...)
+Gehaltsangaben
+
+
+SCHRITT 2 — KLEINE FIRMEN OHNE IT FILTERN
+Behalte nur Jobs, die ALLE dieser Kriterien erfüllen:
+✅ Firmengröße: unter 50 Mitarbeiter (oder keine Angabe = vermutlich klein)
+✅ Keine IT-Abteilung erkennbar (keine Erwähnung von "IT-Abteilung", "ERP-Rollout", "Systemintegration")
+✅ Keine Konzerne, Behörden mit IT-Stab, Krankenhäuser
+✅ Tätigkeit ist rein dateibasiert lösbar (Excel, CSV, PDF, Formulare)
+✅ Keine Tätigkeit die Urteilsvermögen erfordert (kein "beraten", "entscheiden", "bewerten")
+Ideal-Zielgruppen:
+Steuerberatungskanzleien, Versicherungsmakler, Speditionen/Logistik,
+Immobilienverwaltungen, Inkasso-Büros, Handwerksbetriebe, kleine Vereine,
+Werbeagenturen, Buchhaltungsbüros
+
+SCHRITT 3 — AUTOMATISIERBARKEITS-SCORE (0–20 Punkte)
+KriteriumPunkteTätigkeit ist regelbasiert (kein Ermessen nötig)+5Daten liegen als Datei vor (Excel, CSV, PDF)+4Hohe Wiederholungsfrequenz (täglich/wöchentlich)+4Konkrete Software genannt (zeigt strukturierten Prozess)+4Kein Fachwissen nötig — nur Übertragen/Prüfen/Eingeben+3
+Sortiere alle gefilterten Jobs nach Score. Nimm die Top 3.
+
+SCHRITT 4 — APP BAUEN (für jeden der Top 3 Jobs)
+Baue eine vollständige, sofort lauffähige Web-App als einzelne HTML-Datei
+(HTML + CSS + JavaScript, alles inline — kein Build-Prozess, kein npm,
+kein Server nötig).
+Pflichtanforderungen:
+Funktion
+
+Löst genau die manuelle Kerntätigkeit aus der Stellenbeschreibung
+Upload-Bereich: Nutzer zieht CSV oder Excel-Datei hinein (Drag & Drop)
+Verarbeitung passiert im Browser (JavaScript) — keine Daten verlassen das Gerät
+Download-Button: fertige Datei als CSV herunterladen
+Vorschau: Tabelle zeigt die ersten 10 Zeilen des Ergebnisses
+
+Feedback-Button (PFLICHT — nicht weglassen)
+
+Position: Fixiert oben rechts, immer sichtbar (position: fixed)
+Optik: Auffällig orange (#FF6B35), abgerundete Ecken, Schatten
+Inhalt: 💬 Feedback geben
+Klick: Öffnet ein Modal mit:
+
+Überschrift: "Was können wir besser machen?"
+Freitextfeld (mehrzeilig, Pflichtfeld)
+Sternebewertung 1–5 (klickbare Sterne)
+Absenden-Button
+Nach Absenden: "Danke! Wir schauen uns das an." + Modal schließt sich
+Feedback wird im localStorage gespeichert (mit Timestamp)
+
+
+
+Design
+
+Professionell, klar, kein Spielzeug-Optik
+Deutsch durchgehend
+Verständliche Fehlermeldungen ("Diese Spalte fehlt in Ihrer Datei: ...")
+Funktioniert auf jedem modernen Browser ohne Installation
+
+
+SCHRITT 5 — KONTAKTDATEN AUSGEBEN
+Für jeden der Top 3 Jobs diesen Block ausgeben:
+┌──────────────────────────────────────────────────────┐
+│ FIRMA:         [Firmenname]                          │
+│ ORT:           [Stadt, PLZ]                          │
+│ ANSPRECHP.:    [Name wenn vorhanden, sonst "—"]      │
+│ E-MAIL:        [aus Anzeige ODER von Website]        │
+│ STELLENTITEL:  [Original-Titel]                      │
+│ PROBLEM:       [1 Satz: was macht der Mensch heute]  │
+│ LÖSUNG:        [1 Satz: was die App stattdessen tut] │
+│ ZEITERSPARNIS: [Schätzung: z.B. "3–4 Std/Tag"]      │
+└──────────────────────────────────────────────────────┘
+Falls keine E-Mail in der Anzeige: Suche die Firmen-Website und
+extrahiere eine passende Kontakt- oder Geschäftsführer-E-Mail.
+
+SCHRITT 6 — ZWEI MAIL-VORLAGEN JE FIRMA
+Erstelle für jede der 3 Firmen beide Varianten:
+
+MAIL A — "Wir haben die App bereits gebaut"
+(Nutzen wenn App aus Schritt 4 überzeugend ist)
+Betreff: Ihre Stelle "[Stellentitel]" — wir haben eine fertige Lösung
+
+Sehr geehrte/r [Ansprechpartner / "Damen und Herren"],
+
+wir sind auf Ihre Stellenausschreibung für [Stellentitel] aufmerksam
+geworden. Die beschriebene Aufgabe — [konkrete Tätigkeit aus Anzeige,
+1 Satz] — haben wir bereits als Software umgesetzt.
+
+Unsere Web-App erledigt das in Sekunden: [Stellentitel-Tätigkeit]
+funktioniert per Datei-Upload, ganz ohne IT-Aufwand oder Installation.
+Ihre Mitarbeiter laden eine Datei hoch, die fertige Auswertung
+steht sofort zum Download bereit.
+
+Darf ich Ihnen das in 15 Minuten zeigen — per Video-Call oder
+kurz bei Ihnen vor Ort?
+
+Mit freundlichen Grüßen
+[Dein Name]
+[Telefon]
+[Website/LinkedIn]
+
+MAIL B — "Wir sind Entwickler, schildern Sie uns das Problem"
+(Fallback wenn App noch nicht passt, oder als Ergänzung)
+Betreff: Ihre Stelle "[Stellentitel]" — lässt sich das automatisieren?
+
+Sehr geehrte/r [Ansprechpartner / "Damen und Herren"],
+
+wir sind Softwareentwickler mit Fokus auf einfache
+Prozessautomatisierung — ohne IT-Abteilung, ohne Systemintegration,
+ohne Aufwand für Sie.
+
+Ihre Stellenanzeige für [Stellentitel] hat uns aufmerksam gemacht,
+weil wir genau diese Art von [Datenpflege / Erfassung / Bearbeitung]
+schon mehrfach automatisiert haben. Unternehmen sparen damit
+typischerweise eine Vollzeitstelle pro Jahr — als Software, die
+einfach per Browser läuft.
+
+Bevor wir etwas vorschlagen: Könnten Sie uns kurz schildern,
+wie der Prozess heute genau abläuft? Woher kommen die Daten,
+was passiert damit, wo landen sie am Ende?
+
+Das ist komplett unverbindlich — wir wollen nur verstehen,
+ob wir wirklich helfen können.
+
+Mit freundlichen Grüßen
+[Dein Name]
+[Telefon]
+[Website/LinkedIn]
+
+AUSGABE-REIHENFOLGE (in dieser Reihenfolge)
+
+Tabelle: Alle gefilterten Jobs mit Score (Markdown-Tabelle)
+Kontaktblöcke: Top 3 Firmen (Format wie oben)
+App-Code: Vollständige HTML-Datei für Job #1 (direkt ausführbar)
+App-Code: Vollständige HTML-Datei für Job #2
+App-Code: Vollständige HTML-Datei für Job #3
+Mails: 6 Vorlagen (3 Firmen × Mail A + Mail B), klar getrennt
+
+Alles auf Deutsch. Kein Platzhalter-Code — alles muss direkt im
+Browser laufen. Kein "TODO" oder "hier eigene Logik einsetzen".
